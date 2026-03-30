@@ -12,6 +12,26 @@
   "item": [
     {
       "name": "health",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Response is JSON\", function () {",
+              "    pm.response.to.be.json;",
+              "});",
+              "pm.test(\"Status field is ok\", function () {",
+              "    const j = pm.response.json();",
+              "    pm.expect(j.status).to.eql(\"ok\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
       "request": {
         "method": "GET",
         "header": [],
@@ -20,6 +40,22 @@
     },
     {
       "name": "metrics",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Prometheus body not empty\", function () {",
+              "    pm.expect(pm.response.text().length).to.be.above(0);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
       "request": {
         "method": "GET",
         "header": [],
@@ -28,6 +64,26 @@
     },
     {
       "name": "getSingleProduct",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Response is JSON\", function () {",
+              "    pm.response.to.be.json;",
+              "});",
+              "pm.test(\"Returned correct product\", function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.ProductID).to.eql(1001);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
       "request": {
         "method": "GET",
         "url": "{{baseUrl}}/getSingleProduct?product_id=1001"
@@ -35,6 +91,24 @@
     },
     {
       "name": "getAll",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Returns a non-empty array\", function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an(\"array\");",
+              "    pm.expect(jsonData.length).to.be.above(0);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
       "request": {
         "method": "GET",
         "url": "{{baseUrl}}/getAll"
@@ -42,6 +116,27 @@
     },
     {
       "name": "startsWith",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"All names start with requested letter\", function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an(\"array\");",
+              "    pm.expect(jsonData.length).to.be.above(0);",
+              "    jsonData.forEach(function (item) {",
+              "        pm.expect(item.Name.toLowerCase().startsWith(\"s\")).to.eql(true);",
+              "    });",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
       "request": {
         "method": "GET",
         "url": "{{baseUrl}}/startsWith?letter=s"
@@ -49,6 +144,24 @@
     },
     {
       "name": "paginate",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Pagination returns at most 10 items\", function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an(\"array\");",
+              "    pm.expect(jsonData.length).to.be.at.most(10);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
       "request": {
         "method": "GET",
         "url": "{{baseUrl}}/paginate?start_id=1001&end_id=1100"
@@ -56,6 +169,25 @@
     },
     {
       "name": "convert",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Converted price fields present\", function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property(\"UnitPriceEUR\");",
+              "    pm.expect(jsonData).to.have.property(\"UnitPriceUSD\");",
+              "    pm.expect(jsonData.ProductID).to.eql(1001);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
       "request": {
         "method": "GET",
         "url": "{{baseUrl}}/convert?product_id=1001"
@@ -63,6 +195,24 @@
     },
     {
       "name": "addNew",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "pm.test(\"Product created with expected id\", function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.ProductID).to.eql(50001);",
+              "    pm.expect(jsonData.Name).to.include(\"Postman\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
       "request": {
         "method": "POST",
         "header": [
@@ -80,6 +230,24 @@
     },
     {
       "name": "deleteOne",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Product deleted\", function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.deleted).to.eql(true);",
+              "    pm.expect(jsonData.ProductID).to.eql(50001);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
       "request": {
         "method": "DELETE",
         "url": "{{baseUrl}}/deleteOne?product_id=50001"
