@@ -1,0 +1,17 @@
+services:
+  mongo:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      MONGODB_URI: mongodb://mongo:27017
+    depends_on:
+      - mongo
+    command: >
+      sh -c "sleep 8 && python3 scripts/load_csv_to_mongo.py &&
+      python3 -m uvicorn app.main:app --host 0.0.0.0 --port 8000"
