@@ -21,3 +21,13 @@ def close_client() -> None:
     if _mongo_client is not None:
         _mongo_client.close()
         _mongo_client = None
+
+
+def set_mongo_client_for_tests(client: MongoClient) -> None:
+    global _mongo_client
+    _mongo_client = client
+
+
+def reset_mongo_client() -> None:
+    global _mongo_client
+    _mongo_client = None

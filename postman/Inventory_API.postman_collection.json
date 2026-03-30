@@ -1,0 +1,89 @@
+{
+  "info": {
+    "name": "Inventory API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8000"
+    }
+  ],
+  "item": [
+    {
+      "name": "health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/health"
+      }
+    },
+    {
+      "name": "metrics",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/metrics"
+      }
+    },
+    {
+      "name": "getSingleProduct",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/getSingleProduct?product_id=1001"
+      }
+    },
+    {
+      "name": "getAll",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/getAll"
+      }
+    },
+    {
+      "name": "startsWith",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/startsWith?letter=s"
+      }
+    },
+    {
+      "name": "paginate",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/paginate?start_id=1001&end_id=1100"
+      }
+    },
+    {
+      "name": "convert",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/convert?product_id=1001"
+      }
+    },
+    {
+      "name": "addNew",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"ProductID\": 50001,\n  \"Name\": \"Postman Test Product\",\n  \"UnitPrice\": 19.99,\n  \"StockQuantity\": 5,\n  \"Description\": \"Created from Newman\"\n}"
+        },
+        "url": "{{baseUrl}}/addNew"
+      }
+    },
+    {
+      "name": "deleteOne",
+      "request": {
+        "method": "DELETE",
+        "url": "{{baseUrl}}/deleteOne?product_id=50001"
+      }
+    }
+  ]
+}
