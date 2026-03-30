@@ -29,6 +29,7 @@ pipeline {
 
         stage('Newman (Postman collection)') {
             steps {
+                bat 'if not exist "%APPDATA%\\npm" mkdir "%APPDATA%\\npm"'
                 bat 'npx --yes newman run postman/Inventory_API.postman_collection.json --env-var "baseUrl=http://localhost:8000"'
             }
         }
